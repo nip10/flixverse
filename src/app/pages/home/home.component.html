@@ -1,16 +1,2 @@
-<ng-container *ngIf="movies$ | async as movies">
-  <div *ngIf="movies.isLoading">Loading...</div>
-
-  <p *ngIf="movies.isError">Error...</p>
-
-  <ul *ngIf="movies.isSuccess">
-    <li *ngFor="let movie of movies.data.results">
-      {{ movie | json }}
-    </li>
-  </ul>
-
-  <ng-image-slider
-    [images]="(moviesSlider$ | async) || []"
-    [imageSize]="{ width: 300 }"
-  ></ng-image-slider>
-</ng-container>
+<app-media-slider [mediaState$]="movies$"></app-media-slider>
+<app-media-slider [mediaState$]="tvShows$"></app-media-slider>
