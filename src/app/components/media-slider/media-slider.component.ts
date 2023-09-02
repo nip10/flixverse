@@ -2,6 +2,7 @@ import { Component, type ElementRef, Input, ViewChild, CUSTOM_ELEMENTS_SCHEMA } 
 import { CommonModule } from '@angular/common';
 import type { Observable } from 'rxjs';
 import { register } from 'swiper/element/bundle';
+import { LucideAngularModule, Star } from 'lucide-angular';
 register();
 
 export interface MediaState {
@@ -13,6 +14,7 @@ export interface MediaState {
 
 export interface MediaSliderData {
   name: string;
+  rating: number;
   image: {
     url: string;
     alt: string;
@@ -23,11 +25,12 @@ export interface MediaSliderData {
 @Component({
   selector: 'app-media-slider',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './media-slider.component.html',
 })
 export class MediaSliderComponent {
   @ViewChild('swiper') swiper: ElementRef | undefined;
   @Input() mediaState$: Observable<MediaState> | undefined;
+  starIcon = Star;
 }

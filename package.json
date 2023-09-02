@@ -21,6 +21,7 @@
     "@nx/angular": "16.7.4",
     "@spartan-ng/nx": "^0.0.1-alpha.306",
     "@spartan-ng/ui-core": "^0.0.1-alpha.303",
+    "lucide-angular": "^0.274.0",
     "rxjs": "~7.8.0",
     "swiper": "^10.2.0",
     "tslib": "^2.3.0",

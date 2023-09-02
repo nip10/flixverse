@@ -16,10 +16,16 @@
       class="relative w-[300px]"
     >
       <h2
-        class="absolute bottom-4 left-0 bg-slate-100 pl-2 pr-4 text-sm [clip-path:polygon(0%_0%,100%_0%,95%_100%,0%_100%)] overflow-hidden whitespace-nowrap overflow-ellipsis"
+        class="absolute bottom-4 left-0 bg-slate-100 tracking-wide pl-2 pr-4 text-sm [clip-path:polygon(0%_0%,100%_0%,95%_100%,0%_100%)] overflow-hidden whitespace-nowrap overflow-ellipsis"
       >
         {{ item.name }}
       </h2>
+      <span
+        class="absolute right-2 top-2 flex gap-1 items-center bg-slate-100 px-2 py-1 rounded-sm"
+      >
+        <lucide-icon [img]="starIcon" color="orange" size="14" />
+        <span class="text-xs font-bold">{{ item.rating }}</span>
+      </span>
       <img loading="lazy" [src]="item.image.url" [alt]="item.image.alt" />
     </swiper-slide>
   </swiper-container>

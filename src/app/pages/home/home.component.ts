@@ -24,6 +24,7 @@ export class HomeComponent {
         ...response,
         data: response.data?.results.map(movie => ({
           name: movie.title ?? movie.original_title ?? 'Unknown',
+          rating: movie.vote_average,
           image: {
             url: this.tmdbService.createImageUrl('backdrop', movie.backdrop_path, 'w300'),
             alt: movie.title ?? movie.original_title ?? 'Unknown'
@@ -39,6 +40,7 @@ export class HomeComponent {
         ...response,
         data: response.data?.results.map(tvShow => ({
           name: tvShow.name ?? tvShow.original_name ?? 'Unknown',
+          rating: tvShow.vote_average,
           image: {
             url: this.tmdbService.createImageUrl('backdrop', tvShow.backdrop_path, 'w300'),
             alt: tvShow.name ?? tvShow.original_name ?? 'Unknown'
