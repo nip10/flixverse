@@ -9,6 +9,6 @@ interface ImportMetaEnv {
    */
   readonly NG_APP_ENV: string;
   // Add your environment variables below
-  readonly NG_APP_TMDB_API_READ_ACCESS_TOKENL: string;
+  readonly NG_APP_TMDB_API_READ_ACCESS_TOKEN: string;
   [key: string]: any;
 }

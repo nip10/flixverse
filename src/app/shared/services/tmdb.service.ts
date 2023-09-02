@@ -8,7 +8,7 @@ import type { GetMoviesResponse, GetTvShowsResponse } from '../types/tmdb';
 })
 export class TmdbService {
   private BASE_URL = 'https://api.themoviedb.org/3'; // TMDB base URL
-  private API_READ_ACCESS_TOKEN = import.meta.env.NG_APP_TMDB_API_READ_ACCESS_TOKENL; // TMDB API Read Access Token
+  private API_READ_ACCESS_TOKEN = import.meta.env.NG_APP_TMDB_API_READ_ACCESS_TOKEN; // TMDB API Read Access Token
   private http = inject(HttpClient);
   private useQuery = inject(UseQuery);
 
