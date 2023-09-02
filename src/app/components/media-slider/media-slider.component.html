@@ -13,9 +13,13 @@
     <swiper-slide
       *ngFor="let item of sliderMedia"
       lazy="true"
-      class="w-[300px]"
+      class="relative w-[300px]"
     >
-      <h2>{{ item.name }}</h2>
+      <h2
+        class="absolute bottom-4 left-0 bg-slate-100 pl-2 pr-4 text-sm [clip-path:polygon(0%_0%,100%_0%,95%_100%,0%_100%)] overflow-hidden whitespace-nowrap overflow-ellipsis"
+      >
+        {{ item.name }}
+      </h2>
       <img loading="lazy" [src]="item.image.url" [alt]="item.image.alt" />
     </swiper-slide>
   </swiper-container>

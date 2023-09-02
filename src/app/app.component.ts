@@ -7,7 +7,7 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
   standalone: true,
   imports: [RouterModule, HeaderComponent, FooterComponent],
   selector: 'app-root',
-  template: '<app-header /><div class="flex flex-col flex-1 gap-2 max-w-7xl"><router-outlet /></div><app-footer />',
+  template: '<app-header /><div class="flex flex-col flex-1 gap-2 max-w-7xl p-4"><router-outlet /></div><app-footer />',
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: { class: 'min-h-screen flex flex-col' }
 })
