@@ -1,0 +1,11 @@
+<ng-container *ngIf="movies$ | async as movies">
+  <div *ngIf="movies.isLoading">Loading...</div>
+
+  <p *ngIf="movies.isError">Error...</p>
+
+  <ul *ngIf="movies.isSuccess">
+    <li *ngFor="let movie of movies.data.results">
+      {{ movie.title }}
+    </li>
+  </ul>
+</ng-container>

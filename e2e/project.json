@@ -18,5 +18,5 @@
       }
     }
   },
-  "implicitDependencies": ["sonus"]
+  "implicitDependencies": ["flixverse"]
 }

@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'sonus',
+  displayName: 'flixverse',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: './coverage/sonus',
+  coverageDirectory: './coverage/flixverse',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

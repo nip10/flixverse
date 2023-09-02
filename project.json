@@ -1,5 +1,5 @@
 {
-  "name": "sonus",
+  "name": "flixverse",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
@@ -7,16 +7,25 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@ngx-env/builder:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/sonus",
+        "outputPath": "dist/flixverse",
         "index": "./src/index.html",
         "main": "./src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "./tsconfig.app.json",
-        "assets": ["./src/favicon.ico", "./src/assets"],
-        "styles": ["./src/styles.css"],
+        "assets": [
+          "./src/favicon.ico",
+          "./src/assets"
+        ],
+        "styles": [
+          "./src/styles.css"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -47,33 +56,40 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@ngx-env/builder:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "sonus:build:production"
+          "browserTarget": "flixverse:build:production"
         },
         "development": {
-          "browserTarget": "sonus:build:development"
+          "browserTarget": "flixverse:build:development"
         }
       },
       "defaultConfiguration": "development"
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@ngx-env/builder:extract-i18n",
       "options": {
-        "browserTarget": "sonus:build"
+        "browserTarget": "flixverse:build"
       }
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["./src/**/*.ts", "./src/**/*.html"]
+        "lintFilePatterns": [
+          "./src/**/*.ts",
+          "./src/**/*.html"
+        ]
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectName}"],
+      "executor": "@ngx-env/builder:karma",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectName}"
+      ],
       "options": {
         "jestConfig": "jest.config.ts",
         "passWithNoTests": true
