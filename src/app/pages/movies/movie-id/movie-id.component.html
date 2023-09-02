@@ -72,5 +72,12 @@
         </ng-container>
       </ng-container>
     </section>
+
+    <section>
+      <h2 class="text-3xl">Recommended</h2>
+      <app-media-slider
+        [mediaState$]="movieRecommendations$"
+      ></app-media-slider>
+    </section>
   </ng-container>
 </ng-container>

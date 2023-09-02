@@ -6,7 +6,8 @@ import { LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { register } from 'swiper/element/bundle';
 import { TmdbService } from '../../../shared/services/tmdb.service';
-import type { Cast, GetMovieCreditsResponse, GetMovieResponse } from '../../../shared/types/tmdb';
+import type { Cast, GetMovieCreditsResponse, GetMovieResponse, GetMoviesResponse } from '../../../shared/types/tmdb';
+import { MediaSliderComponent, MediaState } from '../../../components/media-slider/media-slider.component';
 register();
 
 export interface MovieIdData {
@@ -43,7 +44,7 @@ export interface MovieCreditsState {
 @Component({
   selector: 'app-movie-id',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
 })
@@ -56,11 +57,11 @@ export class MovieIdComponent {
   movie$ = this.activatedRoute.paramMap.pipe(
     switchMap(params => {
       const movieId = Number(params.get('movieId'));
-      return this.transformMovies(this.tmdbService.getMovieById(movieId).result$);
+      return this.transformMovie(this.tmdbService.getMovieById(movieId).result$);
     })
   );
 
-  private transformMovies(source$: Observable<QueryObserverResult<GetMovieResponse, unknown>>): Observable<MovieState> {
+  private transformMovie(source$: Observable<QueryObserverResult<GetMovieResponse, unknown>>): Observable<MovieState> {
     return source$.pipe(
       map(response => ({
         ...response,
@@ -99,6 +100,31 @@ export class MovieIdComponent {
               profile_path: cast.profile_path ? this.tmdbService.createImageUrl('profile_sizes', cast.profile_path, 'w185') : ''
             })) ?? []
           }
+        }))
+      );
+    }
+
+    movieRecommendations$ = this.activatedRoute.paramMap.pipe(
+      switchMap(params => {
+        const movieId = Number(params.get('movieId'));
+        return this.transformMovies(this.tmdbService.getMovieRecommendationsById(movieId).result$);
+      }
+    ));
+
+    private transformMovies(source$: Observable<QueryObserverResult<GetMoviesResponse, unknown>>): Observable<MediaState> {
+      return source$.pipe(
+        map(response => ({
+          ...response,
+          data: response.data?.results.map(movie => ({
+            id: movie.id,
+            name: movie.title ?? movie.original_title ?? 'Unknown',
+            rating: movie.vote_average,
+            image: {
+              url: movie.backdrop_path ? this.tmdbService.createImageUrl('backdrop', movie.backdrop_path, 'w300') : '',
+              alt: movie.title ?? movie.original_title ?? 'Unknown'
+            },
+            mediaType: 'movies'
+          }))
         }))
       );
     }

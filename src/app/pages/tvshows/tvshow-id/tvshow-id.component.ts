@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
 import { LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { TmdbService } from '../../../shared/services/tmdb.service';
-import type { GetTvShowResponse } from '../../../shared/types/tmdb';
+import type { GetMovieCreditsResponse, GetTvShowResponse, GetTvShowsResponse } from '../../../shared/types/tmdb';
+import { MediaSliderComponent, MediaState } from '../../../components/media-slider/media-slider.component';
+import { MovieCreditsState } from '../../movies/movie-id/movie-id.component';
 
 export interface TvshowIdData {
   name: string;
@@ -32,7 +34,8 @@ export interface MovieState {
 @Component({
   selector: 'app-tvshow-id',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',
 })
 export class TvshowIdComponent {
@@ -44,11 +47,11 @@ export class TvshowIdComponent {
   tvshow$ = this.activatedRoute.paramMap.pipe(
     switchMap(params => {
       const tvshowId = Number(params.get('tvshowId'));
-      return this.transformMovies(this.tmdbService.getTvShowById(tvshowId).result$);
+      return this.transformTvshow(this.tmdbService.getTvShowById(tvshowId).result$);
     })
   );
 
-  private transformMovies(source$: Observable<QueryObserverResult<GetTvShowResponse, unknown>>): Observable<MovieState> {
+  private transformTvshow(source$: Observable<QueryObserverResult<GetTvShowResponse, unknown>>): Observable<MovieState> {
     return source$.pipe(
       map(response => ({
         ...response,
@@ -66,6 +69,54 @@ export class TvshowIdComponent {
             alt: response.data?.name ?? response.data?.original_name ?? 'Unknown'
           }
         }
+      }))
+    );
+  }
+
+  tvshowCredits$ = this.activatedRoute.paramMap.pipe(
+    switchMap(params => {
+      const tvshowId = Number(params.get('tvshowId'));
+      return this.transformMovieCredits(this.tmdbService.getMovieCreditsById(tvshowId).result$);
+    })
+  );
+
+  private transformMovieCredits(source$: Observable<QueryObserverResult<GetMovieCreditsResponse, unknown>>): Observable<MovieCreditsState> {
+    return source$.pipe(
+      map(response => ({
+        ...response,
+        data: {
+          cast: response.data?.cast.map(cast => ({
+            id: cast.id,
+            name: cast.name,
+            character: cast.character,
+            profile_path: cast.profile_path ? this.tmdbService.createImageUrl('profile_sizes', cast.profile_path, 'w185') : ''
+          })) ?? []
+        }
+      }))
+    );
+  }
+
+  tvshowRecommendations$ = this.activatedRoute.paramMap.pipe(
+    switchMap(params => {
+      const tvshowId = Number(params.get('tvshowId'));
+      return this.transformTvShows(this.tmdbService.getTvShowRecommendationsById(tvshowId).result$);
+    }
+  ));
+
+  private transformTvShows(source$: Observable<QueryObserverResult<GetTvShowsResponse, unknown>>): Observable<MediaState> {
+    return source$.pipe(
+      map(response => ({
+        ...response,
+        data: response.data?.results.map(tvShow => ({
+          id: tvShow.id,
+          name: tvShow.name ?? tvShow.original_name ?? 'Unknown',
+          rating: tvShow.vote_average,
+          image: {
+            url: this.tmdbService.createImageUrl('backdrop', tvShow.backdrop_path, 'w300'),
+            alt: tvShow.name ?? tvShow.original_name ?? 'Unknown'
+          },
+          mediaType: 'tvshows'
+        }))
       }))
     );
   }

@@ -116,6 +116,12 @@ export class TmdbService {
     );
   }
 
+  getMovieRecommendationsById(id: number) {
+    return this.useQuery(['movieRecommendations', id], () =>
+      this.http.get<GetMoviesResponse>(`${this.BASE_URL}/movie/${id}/recommendations`, this.getHeaders())
+    );
+  }
+
   getTvShows() {
     return this.useQuery(['tvShows'], () =>
       this.http.get<GetTvShowsResponse>(
@@ -128,6 +134,18 @@ export class TmdbService {
   getTvShowById(id: number) {
     return this.useQuery(['tvShow', id], () =>
       this.http.get<GetTvShowResponse>(`${this.BASE_URL}/tv/${id}`, this.getHeaders())
+    );
+  }
+
+  getTvShowCreditsById(id: number) {
+    return this.useQuery(['tvShowCredits', id], () =>
+      this.http.get<GetMovieCreditsResponse>(`${this.BASE_URL}/tv/${id}/credits`, this.getHeaders())
+    );
+  }
+
+  getTvShowRecommendationsById(id: number) {
+    return this.useQuery(['tvShowRecommendations', id], () =>
+      this.http.get<GetTvShowsResponse>(`${this.BASE_URL}/tv/${id}/recommendations`, this.getHeaders())
     );
   }
 }

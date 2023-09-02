@@ -26,7 +26,7 @@ export class HomeComponent {
           name: movie.title ?? movie.original_title ?? 'Unknown',
           rating: movie.vote_average,
           image: {
-            url: this.tmdbService.createImageUrl('backdrop', movie.backdrop_path, 'w300'),
+            url: movie.backdrop_path ? this.tmdbService.createImageUrl('backdrop', movie.backdrop_path, 'w300') : '',
             alt: movie.title ?? movie.original_title ?? 'Unknown'
           },
           mediaType: 'movies'
