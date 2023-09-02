@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UseQuery } from '@ngneat/query';
-import type { Config, GetMoviesResponse, GetTvShowsResponse, ImageTypeSizes } from '../types/tmdb';
+import type { Config, GetMovieResponse, GetMoviesResponse, GetTvShowResponse, GetTvShowsResponse, ImageTypeSizes } from '../types/tmdb';
 
 @Injectable({
   providedIn: 'root',
@@ -104,12 +104,24 @@ export class TmdbService {
     );
   }
 
+  getMovieById(id: number) {
+    return this.useQuery(['movie', id], () =>
+      this.http.get<GetMovieResponse>(`${this.BASE_URL}/movie/${id}`, this.getHeaders())
+    );
+  }
+
   getTvShows() {
     return this.useQuery(['tvShows'], () =>
       this.http.get<GetTvShowsResponse>(
         `${this.BASE_URL}/discover/tv`,
         this.getHeaders()
       )
+    );
+  }
+
+  getTvShowById(id: number) {
+    return this.useQuery(['tvShow', id], () =>
+      this.http.get<GetTvShowResponse>(`${this.BASE_URL}/tv/${id}`, this.getHeaders())
     );
   }
 }

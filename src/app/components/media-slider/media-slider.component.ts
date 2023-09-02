@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import type { Observable } from 'rxjs';
 import { register } from 'swiper/element/bundle';
 import { LucideAngularModule, Star } from 'lucide-angular';
+import { RouterModule } from '@angular/router';
 register();
 
 export interface MediaState {
@@ -13,6 +14,8 @@ export interface MediaState {
 }
 
 export interface MediaSliderData {
+  id: number;
+  mediaType: 'movies' | 'tvshows';
   name: string;
   rating: number;
   image: {
@@ -25,7 +28,7 @@ export interface MediaSliderData {
 @Component({
   selector: 'app-media-slider',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './media-slider.component.html',
 })

@@ -1,0 +1,37 @@
+<ng-container *ngIf="movie$ | async as media">
+  <!-- Loading state -->
+  <p *ngIf="media.isLoading">Loading...</p>
+
+  <!-- Error state -->
+  <p *ngIf="media.isError">Error...</p>
+
+  <!-- Success state -->
+  <ng-container *ngIf="media.isSuccess && media.data as movie">
+    <section class="flex gap-8">
+      <div class="w-full md:max-w-xs">
+        <img
+          class="rounded-lg"
+          loading="lazy"
+          [src]="movie.image.url"
+          [alt]="movie.image.alt"
+        />
+      </div>
+      <div class="flex flex-col gap-4 p-4">
+        <h1 class="text-5xl font-bold">{{ movie.name }}</h1>
+        <div class="flex items-center gap-2 text-slate-600">
+          <div class="flex items-center gap-2">
+            <lucide-icon [img]="starIcon" color="orange" size="14" />
+            <span>{{ movie.rating }}</span>
+          </div>
+          <span class="w-[1px] text-slate-400">|</span>
+          <span>{{ movie.runtime }} min</span>
+          <span class="w-[1px] text-slate-400">|</span>
+          <span>{{ movie.releaseDate }}</span>
+          <span class="w-[1px] text-slate-400">|</span>
+          <span>{{ movie.genres.join(', ') }}</span>
+        </div>
+        <p>{{ movie.overview }}</p>
+      </div>
+    </section>
+  </ng-container>
+</ng-container>
