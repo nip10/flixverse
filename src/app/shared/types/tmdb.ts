@@ -16,6 +16,7 @@ export interface Config {
 export type ImageTypeSizes = {
   backdrop: 'w300' | 'w780' | 'w1280' | 'original';
   poster: 'w92' | 'w154' | 'w185' | 'w342' | 'w500' | 'w780' | 'original';
+  profile_sizes: 'w45' | 'w185' | 'h632' | 'original';
 };
 
 // API
@@ -59,7 +60,7 @@ export type MovieStatus =
 
 export interface Movie {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path?: string;
   genre_ids: number[];
   id: number;
   original_language: string;
@@ -107,6 +108,41 @@ export interface GetMovieResponse {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface GetMovieCreditsResponse {
+  id: number
+  cast: Cast[]
+  crew: Crew[]
+}
+
+export interface Cast {
+  adult: boolean
+  gender: number
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path?: string
+  cast_id: number
+  character: string
+  credit_id: string
+  order: number
+}
+
+export interface Crew {
+  adult: boolean
+  gender: number
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path?: string
+  credit_id: string
+  department: string
+  job: string
 }
 
 export interface CreatedBy {

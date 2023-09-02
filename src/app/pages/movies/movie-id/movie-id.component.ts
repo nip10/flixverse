@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
 import { LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
+import { register } from 'swiper/element/bundle';
 import { TmdbService } from '../../../shared/services/tmdb.service';
-import type { GetMovieResponse } from '../../../shared/types/tmdb';
+import type { Cast, GetMovieCreditsResponse, GetMovieResponse } from '../../../shared/types/tmdb';
+register();
 
 export interface MovieIdData {
   name: string;
@@ -27,10 +29,22 @@ export interface MovieState {
   data?: MovieIdData;
 }
 
+export interface MovieCreditsData {
+  cast: Pick<Cast, 'id' | 'name' | 'character' | 'profile_path'>[];
+}
+
+export interface MovieCreditsState {
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  data?: MovieCreditsData;
+}
+
 @Component({
   selector: 'app-movie-id',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
 })
 export class MovieIdComponent {
@@ -63,6 +77,29 @@ export class MovieIdComponent {
           }
         }
       }))
+      );
+    }
+
+    movieCredits$ = this.activatedRoute.paramMap.pipe(
+      switchMap(params => {
+        const movieId = Number(params.get('movieId'));
+        return this.transformMovieCredits(this.tmdbService.getMovieCreditsById(movieId).result$);
+      })
     );
-  }
+
+    private transformMovieCredits(source$: Observable<QueryObserverResult<GetMovieCreditsResponse, unknown>>): Observable<MovieCreditsState> {
+      return source$.pipe(
+        map(response => ({
+          ...response,
+          data: {
+            cast: response.data?.cast.map(cast => ({
+              id: cast.id,
+              name: cast.name,
+              character: cast.character,
+              profile_path: cast.profile_path ? this.tmdbService.createImageUrl('profile_sizes', cast.profile_path, 'w185') : ''
+            })) ?? []
+          }
+        }))
+      );
+    }
 }
