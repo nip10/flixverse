@@ -1,23 +1,22 @@
 <ng-container *ngIf="mediaState$ | async as media">
   <p *ngIf="media.isLoading">Loading...</p>
   <p *ngIf="media.isError">Error...</p>
-  <div *ngIf="media.isSuccess">
-    <ng-container *ngIf="media.data as sliderMedia">
-      <swiper-container
-        space-between="10"
-        slides-per-view="auto"
-        lazy-preload-prev-next="true"
-        slides-per-group="3"
-        navigation="true"
-        keyboard="true"
-      >
-        <ng-container *ngFor="let item of sliderMedia">
-          <swiper-slide lazy="true" class="w-[300px]">
-            <h2>{{ item.name }}</h2>
-            <img loading="lazy" [src]="item.image.url" [alt]="item.image.alt" />
-          </swiper-slide>
-        </ng-container>
-      </swiper-container>
-    </ng-container>
-  </div>
+  <swiper-container
+    *ngIf="media.isSuccess && media.data as sliderMedia"
+    space-between="10"
+    slides-per-view="auto"
+    lazy-preload-prev-next="true"
+    slides-per-group="3"
+    navigation="true"
+    keyboard="true"
+  >
+    <swiper-slide
+      *ngFor="let item of sliderMedia"
+      lazy="true"
+      class="w-[300px]"
+    >
+      <h2>{{ item.name }}</h2>
+      <img loading="lazy" [src]="item.image.url" [alt]="item.image.alt" />
+    </swiper-slide>
+  </swiper-container>
 </ng-container>
