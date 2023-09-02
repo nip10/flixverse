@@ -1,3 +1,24 @@
+// Config
+export interface Config {
+  images: {
+    base_url: string;
+    secure_base_url: string;
+    backdrop_sizes: string[];
+    logo_sizes: string[];
+    poster_sizes: string[];
+    profile_sizes: string[];
+    still_sizes: string[];
+  };
+  change_keys: string[];
+}
+
+// Custom types for methods
+export type ImageTypeSizes = {
+  backdrop: 'w300' | 'w780' | 'w1280' | 'original';
+  poster: 'w92' | 'w154' | 'w185' | 'w342' | 'w500' | 'w780' | 'original';
+};
+
+// API
 export interface Movie {
   adult: boolean;
   backdrop_path: string;

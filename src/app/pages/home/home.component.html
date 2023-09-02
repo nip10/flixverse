@@ -5,7 +5,12 @@
 
   <ul *ngIf="movies.isSuccess">
     <li *ngFor="let movie of movies.data.results">
-      {{ movie.title }}
+      {{ movie | json }}
     </li>
   </ul>
+
+  <ng-image-slider
+    [images]="(moviesSlider$ | async) || []"
+    [imageSize]="{ width: 300 }"
+  ></ng-image-slider>
 </ng-container>
