@@ -9,11 +9,12 @@
       slides-per-group="3"
       navigation="true"
       keyboard="true"
+      class="group"
     >
       <swiper-slide
         *ngFor="let item of sliderMedia"
         lazy="true"
-        class="relative w-[300px]"
+        class="relative w-[300px] transition-all duration-200 hover:scale-105 hover:!brightness-100 group-hover:brightness-75"
       >
         <a [routerLink]="[item.mediaType, item.id]">
           <h2
