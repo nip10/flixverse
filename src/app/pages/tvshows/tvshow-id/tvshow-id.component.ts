@@ -2,12 +2,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
-import { LucideAngularModule, Star } from 'lucide-angular';
+import { Clapperboard, LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { TmdbService } from '../../../shared/services/tmdb.service';
 import type { GetMovieCreditsResponse, GetTvShowResponse, GetTvShowsResponse } from '../../../shared/types/tmdb';
 import { MediaSliderComponent, MediaState } from '../../../components/media-slider/media-slider.component';
 import { MovieCreditsState } from '../../movies/movie-id/movie-id.component';
+import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
 
 export interface TvshowIdData {
   name: string;
@@ -34,7 +35,7 @@ export interface MovieState {
 @Component({
   selector: 'app-tvshow-id',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent],
+  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent, HlmButtonDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',
 })
@@ -43,6 +44,7 @@ export class TvshowIdComponent {
   activatedRoute = inject(ActivatedRoute);
 
   starIcon = Star;
+  clapperboardIcon = Clapperboard;
 
   tvshow$ = this.activatedRoute.paramMap.pipe(
     switchMap(params => {

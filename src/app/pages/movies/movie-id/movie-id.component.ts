@@ -2,12 +2,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
-import { LucideAngularModule, Star } from 'lucide-angular';
+import { Clapperboard, LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { register } from 'swiper/element/bundle';
 import { TmdbService } from '../../../shared/services/tmdb.service';
 import type { Cast, GetMovieCreditsResponse, GetMovieResponse, GetMoviesResponse } from '../../../shared/types/tmdb';
 import { MediaSliderComponent, MediaState } from '../../../components/media-slider/media-slider.component';
+import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
 register();
 
 export interface MovieIdData {
@@ -44,7 +45,7 @@ export interface MovieCreditsState {
 @Component({
   selector: 'app-movie-id',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent],
+  imports: [CommonModule, RouterModule, LucideAngularModule, MediaSliderComponent, HlmButtonDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
 })
@@ -53,6 +54,7 @@ export class MovieIdComponent {
   activatedRoute = inject(ActivatedRoute);
 
   starIcon = Star;
+  clapperboardIcon = Clapperboard;
 
   movie$ = this.activatedRoute.paramMap.pipe(
     switchMap(params => {

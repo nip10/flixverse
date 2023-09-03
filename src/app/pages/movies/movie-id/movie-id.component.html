@@ -31,6 +31,10 @@
           <span>{{ movie.genres.join(', ') }}</span>
         </div>
         <p>{{ movie.overview }}</p>
+        <button hlmBtn class="gap-2 w-32">
+          <lucide-icon [img]="clapperboardIcon" color="white" size="16" />
+          <span>Play Trailer</span>
+        </button>
       </div>
     </section>
 
