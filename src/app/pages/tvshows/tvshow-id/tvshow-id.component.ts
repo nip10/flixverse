@@ -20,6 +20,7 @@ import {
 } from '../../../components/media-slider/media-slider.component';
 import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
 import { CastSliderComponent, type CastState } from '../../../components/cast-slider/cast-slider.component';
+import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
 
 export interface TvshowIdData {
   name: string;
@@ -78,6 +79,7 @@ export interface TvshowVideosState {
     HlmButtonDirective,
     DialogModule,
     CastSliderComponent,
+    MediaWrapperComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',

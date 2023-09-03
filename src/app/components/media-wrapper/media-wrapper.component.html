@@ -1,0 +1,39 @@
+<ng-container *ngIf="media$ | async as media">
+  <!-- Loading state -->
+  <p *ngIf="media.isLoading">Loading...</p>
+
+  <!-- Error state -->
+  <p *ngIf="media.isError">Error...</p>
+
+  <!-- Success state -->
+  <ng-container *ngIf="media.isSuccess && media.data">
+    <!-- Media data -->
+    <section class="flex gap-8">
+      <div class="w-full md:max-w-xs">
+        <img
+          class="rounded-lg"
+          loading="lazy"
+          [src]="media.data.image.url"
+          [alt]="media.data.image.alt"
+        />
+      </div>
+      <div class="flex flex-col gap-4 p-4">
+        <h1 class="text-5xl font-bold">{{ media.data.name }}</h1>
+        <!-- Projected Content -->
+        <ng-content select="[mediaDetails]"></ng-content>
+      </div>
+    </section>
+
+    <!-- Cast -->
+    <section class="flex flex-col gap-2">
+      <h2 class="text-3xl">Cast</h2>
+      <ng-content select="[castDetails]"></ng-content>
+    </section>
+
+    <!-- Recommentations -->
+    <section class="flex flex-col gap-2">
+      <h2 class="text-3xl">Recommentations</h2>
+      <ng-content select="[recommendations]"></ng-content>
+    </section>
+  </ng-container>
+</ng-container>

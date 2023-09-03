@@ -24,6 +24,7 @@ import {
   CastSliderComponent,
   type CastState,
 } from '../../../components/cast-slider/cast-slider.component';
+import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
 register();
 
 export interface MovieIdData {
@@ -79,6 +80,7 @@ export interface MovieVideosState {
     HlmButtonDirective,
     DialogModule,
     CastSliderComponent,
+    MediaWrapperComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
