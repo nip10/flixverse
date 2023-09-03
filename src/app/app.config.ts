@@ -6,10 +6,12 @@ import {
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideQueryClientOptions } from '@ngneat/query';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
+    provideAnimations(),
     provideHttpClient(),
     provideQueryClientOptions({
       defaultOptions: {

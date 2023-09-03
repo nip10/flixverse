@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "lucide-angular": "^0.274.0",
+    "primeng": "^16.3.1",
     "rxjs": "~7.8.0",
     "swiper": "^10.2.0",
     "tslib": "^2.3.0",

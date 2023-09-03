@@ -26,28 +26,28 @@ export interface Genre {
 }
 
 export interface BelongsToCollection {
-  id: number
-  name: string
-  poster_path: string
-  backdrop_path: string
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
 }
 
 export interface ProductionCompany {
-  id: number
-  logo_path?: string
-  name: string
-  origin_country: string
+  id: number;
+  logo_path?: string;
+  name: string;
+  origin_country: string;
 }
 
 export interface ProductionCountry {
-  iso_3166_1: string
-  name: string
+  iso_3166_1: string;
+  name: string;
 }
 
 export interface SpokenLanguage {
-  english_name: string
-  iso_639_1: string
-  name: string
+  english_name: string;
+  iso_639_1: string;
+  name: string;
 }
 
 export type MovieStatus =
@@ -111,80 +111,126 @@ export interface GetMovieResponse {
 }
 
 export interface GetMovieCreditsResponse {
-  id: number
-  cast: Cast[]
-  crew: Crew[]
+  id: number;
+  cast: MovieCast[];
+  crew: MovieCrew[];
 }
 
-export interface Cast {
-  adult: boolean
-  gender: number
-  id: number
-  known_for_department: string
-  name: string
-  original_name: string
-  popularity: number
-  profile_path?: string
-  cast_id: number
-  character: string
-  credit_id: string
-  order: number
+export interface GetVideosResponse {
+  id: number;
+  results: Video[];
 }
 
-export interface Crew {
-  adult: boolean
-  gender: number
-  id: number
-  known_for_department: string
-  name: string
-  original_name: string
-  popularity: number
-  profile_path?: string
-  credit_id: string
-  department: string
-  job: string
+export interface Video {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
+interface BaseCast {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  order: number;
+}
+
+export interface MovieCast extends BaseCast {
+  cast_id: number;
+  character: string;
+  credit_id: string;
+}
+
+interface Role {
+  credit_id: string;
+  character: string;
+  episode_count: number;
+}
+
+export interface TvShowCast extends BaseCast {
+  roles: Role[];
+  total_episode_count: number;
+}
+
+interface BaseCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path?: string;
+  department: string;
+}
+
+export interface MovieCrew extends BaseCrew {
+  credit_id: string;
+  job: string;
+}
+
+export interface Job {
+  credit_id: string;
+  job: string;
+  episode_count: number;
+}
+
+export interface TvShowCrew extends BaseCrew {
+  jobs: Job[];
+  total_episode_count: number;
 }
 
 export interface CreatedBy {
-  id: number
-  credit_id: string
-  name: string
-  gender: number
-  profile_path: string
+  id: number;
+  credit_id: string;
+  name: string;
+  gender: number;
+  profile_path: string;
 }
 
 export interface LastEpisodeToAir {
-  id: number
-  name: string
-  overview: string
-  vote_average: number
-  vote_count: number
-  air_date: string
-  episode_number: number
-  episode_type: string
-  production_code: string
-  runtime: number
-  season_number: number
-  show_id: number
-  still_path: string
+  id: number;
+  name: string;
+  overview: string;
+  vote_average: number;
+  vote_count: number;
+  air_date: string;
+  episode_number: number;
+  episode_type: string;
+  production_code: string;
+  runtime: number;
+  season_number: number;
+  show_id: number;
+  still_path: string;
 }
 
 export interface Network {
-  id: number
-  logo_path: string
-  name: string
-  origin_country: string
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
 }
 
 export interface Season {
-  air_date: string
-  episode_count: number
-  id: number
-  name: string
-  overview: string
-  poster_path: string
-  season_number: number
-  vote_average: number
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
 }
 
 export interface TvShow {
@@ -242,4 +288,10 @@ export interface GetTvShowResponse {
   type: string;
   vote_average: number;
   vote_count: number;
+}
+
+export interface GetTvShowCreditsResponse {
+  id: number;
+  cast: TvShowCast[];
+  crew: TvShowCrew[];
 }

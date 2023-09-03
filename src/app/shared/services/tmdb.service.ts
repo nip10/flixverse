@@ -1,7 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UseQuery } from '@ngneat/query';
-import type { Config, GetMovieCreditsResponse, GetMovieResponse, GetMoviesResponse, GetTvShowResponse, GetTvShowsResponse, ImageTypeSizes } from '../types/tmdb';
+import type {
+  Config,
+  GetMovieCreditsResponse,
+  GetMovieResponse,
+  GetMoviesResponse,
+  GetTvShowCreditsResponse,
+  GetTvShowResponse,
+  GetTvShowsResponse,
+  GetVideosResponse,
+  ImageTypeSizes,
+} from '../types/tmdb';
 
 @Injectable({
   providedIn: 'root',
@@ -95,6 +105,10 @@ export class TmdbService {
     return `${this.config.images.secure_base_url}${size}${path}`;
   }
 
+  createVideoUrl(key: string): string {
+    return `https://www.youtube.com/embed/${key}`;
+  }
+
   getMovies() {
     return this.useQuery(['movies'], () =>
       this.http.get<GetMoviesResponse>(
@@ -106,20 +120,38 @@ export class TmdbService {
 
   getMovieById(id: number) {
     return this.useQuery(['movie', id], () =>
-      this.http.get<GetMovieResponse>(`${this.BASE_URL}/movie/${id}`, this.getHeaders())
+      this.http.get<GetMovieResponse>(
+        `${this.BASE_URL}/movie/${id}`,
+        this.getHeaders()
+      )
     );
   }
 
   getMovieCreditsById(id: number) {
     return this.useQuery(['movieCredits', id], () =>
-      this.http.get<GetMovieCreditsResponse>(`${this.BASE_URL}/movie/${id}/credits`, this.getHeaders())
+      this.http.get<GetMovieCreditsResponse>(
+        `${this.BASE_URL}/movie/${id}/credits`,
+        this.getHeaders()
+      )
     );
   }
 
   getMovieRecommendationsById(id: number) {
     return this.useQuery(['movieRecommendations', id], () =>
-      this.http.get<GetMoviesResponse>(`${this.BASE_URL}/movie/${id}/recommendations`, this.getHeaders())
+      this.http.get<GetMoviesResponse>(
+        `${this.BASE_URL}/movie/${id}/recommendations`,
+        this.getHeaders()
+      )
     );
+  }
+
+  getMovieVideosById(id: number) {
+    return this.useQuery(['movieVideos', id], () => {
+      return this.http.get<GetVideosResponse>(
+        `${this.BASE_URL}/movie/${id}/videos`,
+        this.getHeaders()
+      );
+    });
   }
 
   getTvShows() {
@@ -133,19 +165,37 @@ export class TmdbService {
 
   getTvShowById(id: number) {
     return this.useQuery(['tvShow', id], () =>
-      this.http.get<GetTvShowResponse>(`${this.BASE_URL}/tv/${id}`, this.getHeaders())
+      this.http.get<GetTvShowResponse>(
+        `${this.BASE_URL}/tv/${id}`,
+        this.getHeaders()
+      )
     );
   }
 
   getTvShowCreditsById(id: number) {
     return this.useQuery(['tvShowCredits', id], () =>
-      this.http.get<GetMovieCreditsResponse>(`${this.BASE_URL}/tv/${id}/credits`, this.getHeaders())
+      this.http.get<GetTvShowCreditsResponse>(
+        `${this.BASE_URL}/tv/${id}/aggregate_credits`,
+        this.getHeaders()
+      )
     );
   }
 
   getTvShowRecommendationsById(id: number) {
     return this.useQuery(['tvShowRecommendations', id], () =>
-      this.http.get<GetTvShowsResponse>(`${this.BASE_URL}/tv/${id}/recommendations`, this.getHeaders())
+      this.http.get<GetTvShowsResponse>(
+        `${this.BASE_URL}/tv/${id}/recommendations`,
+        this.getHeaders()
+      )
     );
+  }
+
+  getTvShowVideosById(id: number) {
+    return this.useQuery(['tvShowVideos', id], () => {
+      return this.http.get<GetVideosResponse>(
+        `${this.BASE_URL}/tv/${id}/videos`,
+        this.getHeaders()
+      );
+    });
   }
 }
