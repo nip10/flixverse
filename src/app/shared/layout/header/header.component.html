@@ -17,8 +17,9 @@
       <button
         type="button"
         class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+        (click)="toggleMobileMenu()"
       >
-        <span>Open main menu</span>
+        <span class="sr-only">Open main menu</span>
         <svg
           class="h-6 w-6"
           fill="none"
@@ -53,7 +54,12 @@
     </div>
   </nav>
   <!-- Mobile menu, show/hide based on menu open state. -->
-  <div class="lg:hidden" role="dialog" aria-modal="true">
+  <div
+    *ngIf="isMobileMenuOpen"
+    class="lg:hidden"
+    role="dialog"
+    aria-modal="true"
+  >
     <!-- Background backdrop, show/hide based on slide-over state. -->
     <div class="fixed inset-0 z-10"></div>
     <div
@@ -68,7 +74,11 @@
             alt=""
           />
         </a>
-        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+        <button
+          type="button"
+          class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          (click)="toggleMobileMenu()"
+        >
           <span class="sr-only">Close menu</span>
           <svg
             class="h-6 w-6"

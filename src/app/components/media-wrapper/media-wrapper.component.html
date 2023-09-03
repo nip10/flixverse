@@ -5,28 +5,30 @@
   <p *ngIf="media.isError">Error...</p>
   <!-- Success state -->
   <ng-container *ngIf="media.isSuccess && media.data">
-    <!-- Media data -->
-    <section class="flex gap-8">
-      <div class="shrink-0 w-full md:max-w-xs">
-        <img
-          class="rounded-lg"
-          loading="lazy"
-          [src]="media.data.image.url"
-          [alt]="media.data.image.alt"
-        />
-      </div>
-      <!-- Media details -->
-      <ng-content select="[mediaDetails]" />
-    </section>
-    <!-- Cast -->
-    <section class="flex flex-col gap-2">
-      <h2 class="text-3xl">Cast</h2>
-      <ng-content select="[castDetails]" />
-    </section>
-    <!-- Recommentations -->
-    <section class="flex flex-col gap-2">
-      <h2 class="text-3xl">Recommentations</h2>
-      <ng-content select="[recommendations]" />
-    </section>
+    <div class="flex flex-col gap-8">
+      <!-- Media data -->
+      <section class="flex flex-col sm:flex-row gap-4 md:gap-8">
+        <div class="shrink-0 w-full max-w-[200px] md:max-w-xs">
+          <img
+            class="rounded-lg"
+            loading="lazy"
+            [src]="media.data.image.url"
+            [alt]="media.data.image.alt"
+          />
+        </div>
+        <!-- Media details -->
+        <ng-content select="[mediaDetails]" />
+      </section>
+      <!-- Cast -->
+      <section class="flex flex-col gap-2">
+        <h2 class="text-3xl">Cast</h2>
+        <ng-content select="[castDetails]" />
+      </section>
+      <!-- Recommentations -->
+      <section class="flex flex-col gap-2">
+        <h2 class="text-3xl">Recommentations</h2>
+        <ng-content select="[recommendations]" />
+      </section>
+    </div>
   </ng-container>
 </ng-container>
