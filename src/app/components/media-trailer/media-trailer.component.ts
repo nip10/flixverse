@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Clapperboard, LucideAngularModule } from 'lucide-angular';
 import type { Observable } from 'rxjs';
 import { DialogModule } from 'primeng/dialog';
-import type { VideosState } from '../../pages/movies/movie-id/movie-id.component';
-import { HlmButtonDirective } from '../button/hlm-button.directive';
+import type { VideosState } from '@/pages/movies/movie-id/movie-id.component';
+import { HlmButtonDirective } from '@/components/button/hlm-button.directive';
 
 @Component({
   selector: 'app-media-trailer',

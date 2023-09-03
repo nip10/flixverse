@@ -4,24 +4,24 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { TmdbService } from '../../../shared/services/tmdb.service';
+import { TmdbService } from '@/shared/services/tmdb.service';
 import type {
   GetTvShowCreditsResponse,
   GetTvShowResponse,
   GetTvShowsResponse,
   GetVideosResponse,
   TvShowCast,
-} from '../../../shared/types/tmdb';
+} from '@/shared/types/tmdb';
 import {
   MediaSliderComponent,
   type MediaState,
-} from '../../../components/media-slider/media-slider.component';
+} from '@/components/media-slider/media-slider.component';
 import {
   CastSliderComponent,
   type CastState,
-} from '../../../components/cast-slider/cast-slider.component';
-import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
-import { MediaDetailsComponent } from '../../../components/media-details/media-details.component';
+} from '@/components/cast-slider/cast-slider.component';
+import { MediaWrapperComponent } from '@/components/media-wrapper/media-wrapper.component';
+import { MediaDetailsComponent } from '@/components/media-details/media-details.component';
 
 export interface TvshowIdData {
   name: string;

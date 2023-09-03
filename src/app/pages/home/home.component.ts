@@ -5,12 +5,12 @@ import type { QueryObserverResult } from '@tanstack/query-core';
 import {
   MediaSliderComponent,
   type MediaState,
-} from '../../components/media-slider/media-slider.component';
-import { TmdbService } from '../../shared/services/tmdb.service';
+} from '@/components/media-slider/media-slider.component';
+import { TmdbService } from '@/shared/services/tmdb.service';
 import type {
   GetMoviesResponse,
   GetTvShowsResponse,
-} from '../../shared/types/tmdb';
+} from '@/shared/types/tmdb';
 
 @Component({
   selector: 'app-home',

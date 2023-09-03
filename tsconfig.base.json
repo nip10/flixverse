@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@spartan-ng/button-helm": ["button-helm/src/index.ts"]
+      "@spartan-ng/button-helm": ["button-helm/src/index.ts"],
+      "@/components/*": ["src/app/components/*"],
+      "@/pages/*": ["src/app/pages/*"],
+      "@/shared/*": ["src/app/shared/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

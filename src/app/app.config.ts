@@ -3,10 +3,10 @@ import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
-import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { provideQueryClientOptions } from '@ngneat/query';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideQueryClientOptions } from '@ngneat/query';
+import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [

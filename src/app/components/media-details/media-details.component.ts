@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Star } from 'lucide-angular';
 import type { Observable } from 'rxjs';
-import { MediaTrailerComponent } from '../media-trailer/media-trailer.component';
-import type { VideosState } from '../../pages/tvshows/tvshow-id/tvshow-id.component';
+import { MediaTrailerComponent } from '@/components/media-trailer/media-trailer.component';
+import type { VideosState } from '@/pages/tvshows/tvshow-id/tvshow-id.component';
 
 @Component({
   selector: 'app-media-details',

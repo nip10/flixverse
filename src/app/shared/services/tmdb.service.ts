@@ -11,7 +11,7 @@ import type {
   GetTvShowsResponse,
   GetVideosResponse,
   ImageTypeSizes,
-} from '../types/tmdb';
+} from '@/shared/types/tmdb';
 
 @Injectable({
   providedIn: 'root',
