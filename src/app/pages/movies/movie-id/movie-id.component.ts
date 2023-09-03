@@ -190,7 +190,7 @@ export class MovieIdComponent {
               : '',
             alt: movie.title ?? movie.original_title ?? 'Unknown',
           },
-          mediaType: 'movies',
+          mediaType: 'movie',
         })),
       }))
     );

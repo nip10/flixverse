@@ -7,20 +7,20 @@ export const appRoutes: Route[] = [
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'movies',
+    path: 'movie',
     loadComponent: () =>
       import('./pages/movies/movies.component').then((m) => m.MoviesComponent),
     pathMatch: 'full',
   },
   {
-    path: 'movies/:movieId',
+    path: 'movie/:movieId',
     loadComponent: () =>
       import('./pages/movies/movie-id/movie-id.component').then(
         (m) => m.MovieIdComponent
       ),
   },
   {
-    path: 'tvshows',
+    path: 'tv',
     loadComponent: () =>
       import('./pages/tvshows/tvshows.component').then(
         (m) => m.TvshowsComponent
@@ -28,10 +28,22 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
   },
   {
-    path: 'tvshows/:tvshowId',
+    path: 'tv/:tvshowId',
     loadComponent: () =>
       import('./pages/tvshows/tvshow-id/tvshow-id.component').then(
         (m) => m.TvshowIdComponent
+      ),
+  },
+  {
+    path: 'search',
+    loadComponent: () =>
+      import('./pages/search/search.component').then((m) => m.SearchComponent),
+  },
+  {
+    path: 'discover',
+    loadComponent: () =>
+      import('./pages/discover/discover.component').then(
+        (m) => m.DiscoverComponent
       ),
   },
 ];

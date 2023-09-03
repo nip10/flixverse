@@ -1,17 +1,8 @@
-import {
-  Component,
-  type ElementRef,
-  Input,
-  ViewChild,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import type { Observable } from 'rxjs';
-import { register } from 'swiper/element/bundle';
 import { LucideAngularModule, Star } from 'lucide-angular';
-import type { MediaType } from '@/shared/types/tmdb';
-register();
 
 export interface MediaState {
   isLoading: boolean;
@@ -22,9 +13,9 @@ export interface MediaState {
 
 export interface MediaSliderData {
   id: number;
-  mediaType: MediaType;
+  mediaType: 'movie' | 'tv' | 'person';
   name: string;
-  rating: number;
+  rating?: number;
   image: {
     url: string;
     alt: string;
@@ -32,14 +23,12 @@ export interface MediaSliderData {
 }
 
 @Component({
-  selector: 'app-media-slider',
+  selector: 'app-media-grid',
   standalone: true,
   imports: [CommonModule, RouterModule, LucideAngularModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './media-slider.component.html',
+  templateUrl: './media-grid.component.html',
 })
-export class MediaSliderComponent {
-  @ViewChild('swiper') swiper: ElementRef | undefined;
+export class MediaGridComponent {
   @Input() mediaState$: Observable<MediaState> | undefined;
   starIcon = Star;
 }

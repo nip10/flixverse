@@ -192,7 +192,7 @@ export class TvshowIdComponent {
             ),
             alt: tvShow.name ?? tvShow.original_name ?? 'Unknown',
           },
-          mediaType: 'tvshows',
+          mediaType: 'tv',
         })),
       }))
     );

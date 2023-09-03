@@ -2,21 +2,12 @@
   <p *ngIf="media.isLoading">Loading...</p>
   <p *ngIf="media.isError">Error...</p>
   <ng-container *ngIf="media.isSuccess && media.data as sliderMedia">
-    <swiper-container
-      space-between="10"
-      slides-per-view="auto"
-      lazy-preload-prev-next="true"
-      slides-per-group="3"
-      navigation="true"
-      keyboard="true"
-      class="group"
-    >
-      <swiper-slide
+    <div class="grid grid-cols-[repeat(auto-fill,300px)] gap-4">
+      <div
         *ngFor="let item of sliderMedia"
-        lazy="true"
-        class="relative w-[300px] transition-all duration-200 hover:scale-105 hover:!brightness-100 group-hover:brightness-75 hover:shadow-sm"
+        class="relative w-[300px] transition-all duration-200 hover:scale-105 shadow-lg"
       >
-        <a [routerLink]="[item.mediaType, item.id]">
+        <a [routerLink]="['/', item.mediaType, item.id]">
           <h2
             class="absolute bottom-4 left-0 bg-slate-100 tracking-wide pl-2 pr-4 text-sm [clip-path:polygon(0%_0%,100%_0%,95%_100%,0%_100%)] overflow-hidden whitespace-nowrap overflow-ellipsis"
           >
@@ -28,9 +19,14 @@
             <lucide-icon [img]="starIcon" color="orange" size="14" />
             <span class="text-xs font-bold">{{ item.rating }}</span>
           </span>
-          <img loading="lazy" [src]="item.image.url" [alt]="item.image.alt" />
+          <img
+            class="rounded-sm"
+            loading="lazy"
+            [src]="item.image.url"
+            [alt]="item.image.alt"
+          />
         </a>
-      </swiper-slide>
-    </swiper-container>
+      </div>
+    </div>
   </ng-container>
 </ng-container>

@@ -3,9 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UseQuery } from '@ngneat/query';
 import type {
   Config,
+  DiscoverMoviesFilters,
   GetMovieCreditsResponse,
   GetMovieResponse,
   GetMoviesResponse,
+  GetMultiSearchResponse,
   GetTvShowCreditsResponse,
   GetTvShowResponse,
   GetTvShowsResponse,
@@ -20,7 +22,7 @@ export class TmdbService {
   private readonly BASE_URL = 'https://api.themoviedb.org/3';
   private readonly API_READ_ACCESS_TOKEN = import.meta.env
     .NG_APP_TMDB_API_READ_ACCESS_TOKEN;
-  private readonly config: Config = {
+  public readonly config: Config = {
     images: {
       base_url: 'http://image.tmdb.org/t/p/',
       secure_base_url: 'https://image.tmdb.org/t/p/',
@@ -85,6 +87,152 @@ export class TmdbService {
       'video',
       'videos',
     ],
+    genres: {
+      movie: [
+        {
+          id: 28,
+          name: 'Action',
+        },
+        {
+          id: 12,
+          name: 'Adventure',
+        },
+        {
+          id: 16,
+          name: 'Animation',
+        },
+        {
+          id: 35,
+          name: 'Comedy',
+        },
+        {
+          id: 80,
+          name: 'Crime',
+        },
+        {
+          id: 99,
+          name: 'Documentary',
+        },
+        {
+          id: 18,
+          name: 'Drama',
+        },
+        {
+          id: 10751,
+          name: 'Family',
+        },
+        {
+          id: 14,
+          name: 'Fantasy',
+        },
+        {
+          id: 36,
+          name: 'History',
+        },
+        {
+          id: 27,
+          name: 'Horror',
+        },
+        {
+          id: 10402,
+          name: 'Music',
+        },
+        {
+          id: 9648,
+          name: 'Mystery',
+        },
+        {
+          id: 10749,
+          name: 'Romance',
+        },
+        {
+          id: 878,
+          name: 'Science Fiction',
+        },
+        {
+          id: 10770,
+          name: 'TV Movie',
+        },
+        {
+          id: 53,
+          name: 'Thriller',
+        },
+        {
+          id: 10752,
+          name: 'War',
+        },
+        {
+          id: 37,
+          name: 'Western',
+        },
+      ],
+      tv: [
+        {
+          id: 10759,
+          name: 'Action & Adventure',
+        },
+        {
+          id: 16,
+          name: 'Animation',
+        },
+        {
+          id: 35,
+          name: 'Comedy',
+        },
+        {
+          id: 80,
+          name: 'Crime',
+        },
+        {
+          id: 99,
+          name: 'Documentary',
+        },
+        {
+          id: 18,
+          name: 'Drama',
+        },
+        {
+          id: 10751,
+          name: 'Family',
+        },
+        {
+          id: 10762,
+          name: 'Kids',
+        },
+        {
+          id: 9648,
+          name: 'Mystery',
+        },
+        {
+          id: 10763,
+          name: 'News',
+        },
+        {
+          id: 10764,
+          name: 'Reality',
+        },
+        {
+          id: 10765,
+          name: 'Sci-Fi & Fantasy',
+        },
+        {
+          id: 10766,
+          name: 'Soap',
+        },
+        {
+          id: 10767,
+          name: 'Talk',
+        },
+        {
+          id: 10768,
+          name: 'War & Politics',
+        },
+        {
+          id: 37,
+          name: 'Western',
+        },
+      ],
+    },
   };
   private http = inject(HttpClient);
   private useQuery = inject(UseQuery);
@@ -154,6 +302,33 @@ export class TmdbService {
     });
   }
 
+  discoverMovies(searchTerm?: string | null, filters?: DiscoverMoviesFilters) {
+    const params: Record<string, string> = {};
+
+    if (filters?.genres) {
+        params['with_genres'] = filters.genres.join(',');
+    }
+    if (filters?.releaseYear) {
+        params['primary_release_date.gte'] = filters.releaseYear[0].toString();
+        params['primary_release_date.lte'] = filters.releaseYear[1].toString();
+    }
+    if (filters?.rating) {
+        params['vote_average.gte'] = filters.rating[0].toString();
+        params['vote_average.lte'] = filters.rating[1].toString();
+    }
+    if (filters?.runtime) {
+        params['with_runtime.gte'] = filters.runtime[0].toString();
+        params['with_runtime.lte'] = filters.runtime[1].toString();
+    }
+
+    return this.useQuery(['discoverMovies', searchTerm, filters], () =>
+      this.http.get<GetMoviesResponse>(`${this.BASE_URL}/discover/movie`, {
+        ...this.getHeaders(),
+        params,
+      })
+    );
+  }
+
   getTvShows() {
     return this.useQuery(['tvShows'], () =>
       this.http.get<GetTvShowsResponse>(
@@ -197,5 +372,16 @@ export class TmdbService {
         this.getHeaders()
       );
     });
+  }
+
+  getMultiSearch(searchTerm: string) {
+    return this.useQuery(['multiSearch', searchTerm], () =>
+      this.http.get<GetMultiSearchResponse>(`${this.BASE_URL}/search/multi`, {
+        ...this.getHeaders(),
+        params: {
+          query: searchTerm,
+        },
+      })
+    );
   }
 }

@@ -1,0 +1,98 @@
+<form
+  class="flex gap-8"
+  [formGroup]="searchForm"
+  (submit)="onSubmit(searchForm.value)"
+>
+  <div class="flex flex-col gap-6 w-[280px]">
+    <brn-collapsible
+      defaultState="open"
+      class="flex flex-col gap-2 items-start"
+    >
+      <div class="flex items-center justify-between w-full">
+        <h4 class="font-semibold">Genres</h4>
+        <button
+          brnCollapsibleTrigger
+          hlmBtn
+          variant="ghost"
+          size="sm"
+          class="w-9 p-0"
+        >
+          <lucide-icon [img]="chevronDownUp" size="14" />
+          <span class="sr-only">Toggle</span>
+        </button>
+      </div>
+      <brn-collapsible-content>
+        <div class="flex flex-col gap-3">
+          <div
+            class="flex items-center gap-2"
+            *ngFor="let genre of movieGenres"
+          >
+            <p-checkbox
+              name="genre"
+              [value]="genre.id"
+              styleClass="h-5"
+              [inputId]="genre.id.toString()"
+              (onChange)="onGenreChange($event)"
+            />
+            <label [for]="genre.id" class="text-sm">{{ genre.name }}</label>
+          </div>
+        </div>
+      </brn-collapsible-content>
+    </brn-collapsible>
+    <div class="flex flex-col gap-2">
+      <h4 id="release_year" class="font-semibold">Release Year</h4>
+      <p-slider
+        styleClass="mx-auto w-[280px]"
+        aria-labelledby="release_year"
+        [animate]="true"
+        [range]="true"
+        [min]="1900"
+        [max]="currentYear"
+        [step]="1"
+        formControlName="releaseYear"
+      />
+      <div class="flex justify-between text-sm">
+        <span>{{ getReleaseYearRange()?.[0] }}</span>
+        <span>{{ getReleaseYearRange()?.[1] }}</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <h4 id="runtime" class="font-semibold">Runtime</h4>
+      <p-slider
+        styleClass="mx-auto w-[280px]"
+        aria-labelledby="runtime"
+        [animate]="true"
+        [range]="true"
+        [min]="0"
+        [max]="300"
+        [step]="1"
+        formControlName="runtime"
+      />
+      <div class="flex justify-between text-sm">
+        <span>{{ getRuntimeRange()?.[0] }}</span>
+        <span>{{ getRuntimeRange()?.[1] }}</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <span id="rating" class="font-bold">Rating</span>
+      <p-slider
+        styleClass="mx-auto w-[280px]"
+        aria-labelledby="rating"
+        [animate]="true"
+        [range]="true"
+        [min]="0"
+        [max]="10"
+        [step]="1"
+        formControlName="rating"
+      />
+      <div class="flex justify-between text-sm">
+        <span>{{ getRatingRange()?.[0] }}</span>
+        <span>{{ getRatingRange()?.[1] }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-4 flex-1">
+    <h2 class="text-sm text-slate-500">Exploring 20000 movies...</h2>
+    <app-media-grid [mediaState$]="movies$" />
+  </div>
+</form>

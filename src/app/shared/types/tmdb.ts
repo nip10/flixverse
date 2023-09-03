@@ -10,6 +10,10 @@ export interface Config {
     still_sizes: string[];
   };
   change_keys: string[];
+  genres: {
+    tv: Genre[];
+    movie: Genre[];
+  };
 }
 
 // Custom types for methods
@@ -294,4 +298,65 @@ export interface GetTvShowCreditsResponse {
   id: number;
   cast: TvShowCast[];
   crew: TvShowCrew[];
+}
+
+export interface DiscoverMoviesFilters {
+  genres: (number | null)[];
+  releaseYear: [number, number];
+  rating: [number, number];
+  runtime: [number, number];
+}
+
+export interface KnownFor {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: MediaType;
+  genre_ids: number[];
+  popularity: number;
+  release_date: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export type MediaType = 'movie' | 'tv' | 'person';
+
+// This can be a movie or a tv show or a person
+export interface MultiSearchItem {
+  adult: boolean;
+  backdrop_path?: string;
+  id: number;
+  name?: string;
+  original_language?: string;
+  original_name?: string;
+  overview?: string;
+  poster_path?: string;
+  media_type: MediaType;
+  genre_ids?: number[];
+  popularity: number;
+  first_air_date?: string;
+  vote_average?: number;
+  vote_count?: number;
+  origin_country?: string[];
+  title?: string;
+  original_title?: string;
+  release_date?: string;
+  video?: boolean;
+  gender?: number;
+  known_for_department?: string;
+  profile_path: string;
+  known_for?: KnownFor[];
+}
+
+export interface GetMultiSearchResponse {
+  page: number;
+  results: MultiSearchItem[];
+  total_pages: number;
+  total_results: number;
 }

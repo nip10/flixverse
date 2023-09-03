@@ -1,0 +1,19 @@
+<form [formGroup]="searchForm" (submit)="onSubmit(searchForm.value)">
+  <div class="flex flex-col gap-4 flex-1">
+    <div class="flex gap-4 items-center">
+      <input
+        aria-label="Email"
+        hlmInput
+        placeholder="Search for a movie"
+        class="flex-1"
+        formControlName="searchTerm"
+      />
+      <button hlmBtn class="gap-2" type="submit">
+        <lucide-icon [img]="searchIcon" size="14" />
+        <span>Search</span>
+      </button>
+    </div>
+    <h2 class="text-sm text-slate-500">Exploring 20000 movies...</h2>
+    <app-media-grid [mediaState$]="items$" />
+  </div>
+</form>

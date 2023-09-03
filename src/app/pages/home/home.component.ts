@@ -21,7 +21,6 @@ import type {
 export class HomeComponent {
   tmdbService = inject(TmdbService);
   movies$ = this.transformMovies(this.tmdbService.getMovies().result$);
-  tvShows$ = this.transformTvShows(this.tmdbService.getTvShows().result$);
 
   private transformMovies(
     source$: Observable<QueryObserverResult<GetMoviesResponse, unknown>>
@@ -43,11 +42,13 @@ export class HomeComponent {
               : '',
             alt: movie.title ?? movie.original_title ?? 'Unknown',
           },
-          mediaType: 'movies',
+          mediaType: 'movie',
         })),
       }))
     );
   }
+
+  tvShows$ = this.transformTvShows(this.tmdbService.getTvShows().result$);
 
   private transformTvShows(
     source$: Observable<QueryObserverResult<GetTvShowsResponse, unknown>>
@@ -67,7 +68,7 @@ export class HomeComponent {
             ),
             alt: tvShow.name ?? tvShow.original_name ?? 'Unknown',
           },
-          mediaType: 'tvshows',
+          mediaType: 'tv',
         })),
       }))
     );
