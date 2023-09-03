@@ -6,6 +6,8 @@ The goal of this project is to get (re)familiar with Angular (now at v16) and tr
 
 There's no real goal to this project other than to have fun and learn. Do not expect this to be a fully functional application.
 
+The live version of this app can be found at [flixverse-iota.vercel.app](flixverse-iota.vercel.app/). It's hosted on Vercel, and deploys on every push to the `main` branch.
+
 ## Tech
 
 - Angular 16
@@ -50,3 +52,17 @@ nx run-many -t <target1> <target2> -p <proj1> <proj2>
 ```
 
 Targets can be defined in the `package.json` or `projects.json`. Learn more [in the docs](https://nx.dev/core-features/run-tasks).
+
+## Todo
+
+- Move discover to movies
+  - Add order by
+- Clone discover/movies to tvshows
+- Clone discover/movies/tvshows to people ?
+- Add to portfolio
+- Add analytics
+- Replace modal by spartan dialog
+- Add loading animations
+- Add error handling
+- Add sentry
+- Design review
