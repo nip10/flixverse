@@ -2,9 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
-import { Clapperboard, LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
-import { DialogModule } from 'primeng/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TmdbService } from '../../../shared/services/tmdb.service';
 import type {
@@ -18,9 +16,9 @@ import {
   MediaSliderComponent,
   type MediaState,
 } from '../../../components/media-slider/media-slider.component';
-import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
 import { CastSliderComponent, type CastState } from '../../../components/cast-slider/cast-slider.component';
 import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
+import { MediaDetailsComponent } from '../../../components/media-details/media-details.component';
 
 export interface TvshowIdData {
   name: string;
@@ -57,15 +55,15 @@ export interface TvshowCreditsState {
   data?: TvshowCreditsData;
 }
 
-export interface TvshowVideosData {
+export interface VideosData {
   url: SafeResourceUrl | null;
 }
 
-export interface TvshowVideosState {
+export interface VideosState {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  data?: TvshowVideosData;
+  data?: VideosData;
 }
 
 @Component({
@@ -74,12 +72,10 @@ export interface TvshowVideosState {
   imports: [
     CommonModule,
     RouterModule,
-    LucideAngularModule,
-    MediaSliderComponent,
-    HlmButtonDirective,
-    DialogModule,
-    CastSliderComponent,
     MediaWrapperComponent,
+    MediaDetailsComponent,
+    CastSliderComponent,
+    MediaSliderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',
@@ -88,14 +84,6 @@ export class TvshowIdComponent {
   tmdbService = inject(TmdbService);
   activatedRoute = inject(ActivatedRoute);
   sanitizer = inject(DomSanitizer);
-
-  starIcon = Star;
-  clapperboardIcon = Clapperboard;
-
-  visible = false;
-  showDialog() {
-    this.visible = true;
-  }
 
   tvshow$ = this.activatedRoute.paramMap.pipe(
     switchMap((params) => {
@@ -219,7 +207,7 @@ export class TvshowIdComponent {
 
   private transformVideos(
     source$: Observable<QueryObserverResult<GetVideosResponse, unknown>>
-  ): Observable<TvshowVideosState> {
+  ): Observable<VideosState> {
     return source$.pipe(
       map((response) => {
         const trailer = response.data?.results.find(

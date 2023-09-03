@@ -1,54 +1,15 @@
 <app-media-wrapper [media$]="movie$">
   <div mediaDetails>
     <ng-container *ngIf="movie$ | async as movie">
-      <div class="flex items-center gap-2 text-slate-600">
-        <div class="flex items-center gap-2">
-          <lucide-icon [img]="starIcon" color="orange" size="14" />
-          <span>{{ movie.data?.rating }}</span>
-        </div>
-        <span class="w-[1px] text-slate-400">|</span>
-        <span>{{ movie.data?.runtime }} min</span>
-        <span class="w-[1px] text-slate-400">|</span>
-        <span>{{ movie.data?.releaseDate }}</span>
-        <span class="w-[1px] text-slate-400">|</span>
-        <span>{{ movie.data?.genres?.join(', ') }}</span>
-      </div>
-      <p>{{ movie.data?.overview }}</p>
-      <ng-container *ngIf="movieVideos$ | async as videoMedia">
-        <button
-          hlmBtn
-          class="gap-2 w-32"
-          [disabled]="!videoMedia.data?.url || videoMedia.isLoading"
-          (click)="showDialog()"
-        >
-          <ng-container *ngIf="videoMedia.isLoading">Loading...</ng-container>
-          <ng-container *ngIf="!videoMedia.isLoading">
-            <lucide-icon [img]="clapperboardIcon" color="white" size="16" />
-            <span>Play Trailer</span>
-          </ng-container>
-        </button>
-      </ng-container>
-      <p-dialog
-        header="Trailer"
-        [(visible)]="visible"
-        [modal]="true"
-        [style]="{ width: '50vw' }"
-        [draggable]="false"
-        [resizable]="false"
-        [dismissableMask]="true"
-      >
-        <ng-container *ngIf="movieVideos$ | async as videoMedia">
-          <iframe
-            *ngIf="videoMedia.data?.url"
-            [src]="videoMedia.data?.url"
-            width="100%"
-            height="315"
-            frameborder="0"
-            allowfullscreen
-          >
-          </iframe>
-        </ng-container>
-      </p-dialog>
+      <app-media-details
+        [name]="movie.data!.name"
+        [rating]="movie.data!.rating"
+        [genres]="movie.data!.genres"
+        [overview]="movie.data!.overview"
+        [runtime]="movie.data!.runtime"
+        [releaseDate]="movie.data!.releaseDate"
+        [videoMedia$]="movieVideos$"
+      />
     </ng-container>
   </div>
   <app-cast-slider castDetails [castState$]="movieCredits$" />

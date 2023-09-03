@@ -1,0 +1,39 @@
+<!-- Trailer Button -->
+<ng-container *ngIf="videoMedia$ | async as videoMedia">
+  <button
+    hlmBtn
+    class="gap-2 w-32"
+    [disabled]="!videoMedia.data?.url || videoMedia.isLoading"
+    (click)="showDialog()"
+  >
+    <ng-container *ngIf="videoMedia.isLoading">Loading...</ng-container>
+    <ng-container *ngIf="!videoMedia.isLoading">
+      <lucide-icon [img]="clapperboardIcon" color="white" size="16" />
+      <span>Play Trailer</span>
+    </ng-container>
+  </button>
+</ng-container>
+
+<!-- Trailer Modal -->
+<p-dialog
+  header="Trailer"
+  [(visible)]="isModalVisible"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  (onHide)="closeDialog()"
+>
+  <ng-container *ngIf="videoMedia$ | async as videoMedia">
+    <iframe
+      *ngIf="videoMedia.data?.url"
+      [src]="videoMedia.data?.url"
+      width="100%"
+      height="315"
+      frameborder="0"
+      allowfullscreen
+    >
+    </iframe>
+  </ng-container>
+</p-dialog>

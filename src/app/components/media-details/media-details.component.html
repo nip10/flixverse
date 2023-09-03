@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-4">
+  <h1 class="text-5xl font-bold">{{ name }}</h1>
+
+  <div class="flex items-center gap-2 text-slate-600">
+    <div class="flex items-center gap-2">
+      <lucide-icon [img]="starIcon" color="orange" size="14" />
+      <span>{{ rating }}</span>
+    </div>
+    <span class="w-[1px] text-slate-400">|</span>
+
+    <!-- For movies -->
+    <ng-container *ngIf="runtime">
+      <span>{{ runtime }} min</span>
+      <span class="w-[1px] text-slate-400">|</span>
+    </ng-container>
+
+    <!-- For TV Shows -->
+    <ng-container *ngIf="seasons">
+      <span>{{ seasons }} seasons</span>
+      <span class="w-[1px] text-slate-400">|</span>
+    </ng-container>
+
+    <ng-container *ngIf="episodes">
+      <span>{{ episodes }} episodes</span>
+      <span class="w-[1px] text-slate-400">|</span>
+    </ng-container>
+
+    <!-- For movies -->
+    <ng-container *ngIf="releaseDate">
+      <span>{{ releaseDate }}</span>
+      <span class="w-[1px] text-slate-400">|</span>
+    </ng-container>
+
+    <span>{{ genreText }}</span>
+  </div>
+
+  <p class="text-sm text-slate-600">{{ overview }}</p>
+
+  <app-media-trailer [videoMedia$]="videoMedia$" />
+</div>

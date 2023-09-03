@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DomSanitizer, type SafeResourceUrl } from '@angular/platform-browser';
 import { type Observable, map, switchMap } from 'rxjs';
-import { Clapperboard, LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
-import { DialogModule } from 'primeng/dialog';
 import { register } from 'swiper/element/bundle';
 import { TmdbService } from '../../../shared/services/tmdb.service';
 import type {
@@ -19,12 +17,12 @@ import {
   MediaSliderComponent,
   type MediaState,
 } from '../../../components/media-slider/media-slider.component';
-import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
 import {
   CastSliderComponent,
   type CastState,
 } from '../../../components/cast-slider/cast-slider.component';
 import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
+import { MediaDetailsComponent } from '../../../components/media-details/media-details.component';
 register();
 
 export interface MovieIdData {
@@ -58,15 +56,15 @@ export interface MovieCreditsState {
   data?: MovieCreditsData;
 }
 
-export interface MovieVideosData {
+export interface VideosData {
   url: SafeResourceUrl | null;
 }
 
-export interface MovieVideosState {
+export interface VideosState {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  data?: MovieVideosData;
+  data?: VideosData;
 }
 
 @Component({
@@ -75,12 +73,10 @@ export interface MovieVideosState {
   imports: [
     CommonModule,
     RouterModule,
-    LucideAngularModule,
-    MediaSliderComponent,
-    HlmButtonDirective,
-    DialogModule,
-    CastSliderComponent,
     MediaWrapperComponent,
+    MediaDetailsComponent,
+    CastSliderComponent,
+    MediaSliderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
@@ -89,14 +85,6 @@ export class MovieIdComponent {
   tmdbService = inject(TmdbService);
   activatedRoute = inject(ActivatedRoute);
   sanitizer = inject(DomSanitizer);
-
-  starIcon = Star;
-  clapperboardIcon = Clapperboard;
-
-  visible = false;
-  showDialog() {
-    this.visible = true;
-  }
 
   movie$ = this.activatedRoute.paramMap.pipe(
     switchMap((params) => {
@@ -220,7 +208,7 @@ export class MovieIdComponent {
 
   private transformVideos(
     source$: Observable<QueryObserverResult<GetVideosResponse, unknown>>
-  ): Observable<MovieVideosState> {
+  ): Observable<VideosState> {
     return source$.pipe(
       map((response) => {
         const trailer = response.data?.results.find(
