@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DomSanitizer, type SafeResourceUrl } from '@angular/platform-browser';
@@ -78,7 +78,6 @@ export interface VideosState {
     CastSliderComponent,
     MediaSliderComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
 })
 export class MovieIdComponent {

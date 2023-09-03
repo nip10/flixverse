@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { type Observable, map, switchMap } from 'rxjs';
@@ -16,7 +16,10 @@ import {
   MediaSliderComponent,
   type MediaState,
 } from '../../../components/media-slider/media-slider.component';
-import { CastSliderComponent, type CastState } from '../../../components/cast-slider/cast-slider.component';
+import {
+  CastSliderComponent,
+  type CastState,
+} from '../../../components/cast-slider/cast-slider.component';
 import { MediaWrapperComponent } from '../../../components/media-wrapper/media-wrapper.component';
 import { MediaDetailsComponent } from '../../../components/media-details/media-details.component';
 
@@ -77,7 +80,6 @@ export interface VideosState {
     CastSliderComponent,
     MediaSliderComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',
 })
 export class TvshowIdComponent {

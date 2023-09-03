@@ -9,13 +9,18 @@ import { HlmButtonDirective } from '../button/hlm-button.directive';
 @Component({
   selector: 'app-media-trailer',
   standalone: true,
-    imports: [CommonModule, LucideAngularModule, DialogModule, HlmButtonDirective],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+    DialogModule,
+    HlmButtonDirective,
+  ],
   templateUrl: './media-trailer.component.html',
 })
 export class MediaTrailerComponent {
   @Input() videoMedia$!: Observable<VideosState>;
 
-  clapperboardIcon = Clapperboard
+  clapperboardIcon = Clapperboard;
   isModalVisible = false;
 
   showDialog() {
