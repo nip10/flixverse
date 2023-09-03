@@ -10,16 +10,33 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@spartan-ng/button-helm": ["button-helm/src/index.ts"],
-      "@/components/*": ["src/app/components/*"],
-      "@/pages/*": ["src/app/pages/*"],
-      "@/shared/*": ["src/app/shared/*"]
+      "@spartan-ng/button-helm": [
+        "button-helm/src/index.ts"
+      ],
+      "@/components/*": [
+        "src/app/components/*"
+      ],
+      "@/pages/*": [
+        "src/app/pages/*"
+      ],
+      "@/shared/*": [
+        "src/app/shared/*"
+      ],
+      "@spartan-ng/input-helm": [
+        "input-helm/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
