@@ -22,6 +22,7 @@
     "@nx/angular": "16.7.4",
     "@spartan-ng/nx": "^0.0.1-alpha.306",
     "@spartan-ng/ui-core": "^0.0.1-alpha.303",
+    "@spartan-ng/ui-dialog-brain": "0.0.1-alpha.303",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "lucide-angular": "^0.274.0",
