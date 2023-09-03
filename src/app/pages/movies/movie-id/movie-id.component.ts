@@ -20,6 +20,10 @@ import {
   type MediaState,
 } from '../../../components/media-slider/media-slider.component';
 import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
+import {
+  CastSliderComponent,
+  type CastState,
+} from '../../../components/cast-slider/cast-slider.component';
 register();
 
 export interface MovieIdData {
@@ -74,6 +78,7 @@ export interface MovieVideosState {
     MediaSliderComponent,
     HlmButtonDirective,
     DialogModule,
+    CastSliderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './movie-id.component.html',
@@ -143,25 +148,26 @@ export class MovieIdComponent {
 
   private transformMovieCredits(
     source$: Observable<QueryObserverResult<GetMovieCreditsResponse, unknown>>
-  ): Observable<MovieCreditsState> {
+  ): Observable<CastState> {
     return source$.pipe(
       map((response) => ({
         ...response,
-        data: {
-          cast:
-            response.data?.cast.map((cast) => ({
-              id: cast.id,
-              name: cast.name,
-              character: cast.character,
-              profile_path: cast.profile_path
+        data:
+          response.data?.cast.map((cast) => ({
+            id: cast.id,
+            name: cast.name,
+            character: cast.character,
+            image: {
+              url: cast.profile_path
                 ? this.tmdbService.createImageUrl(
                     'profile_sizes',
                     cast.profile_path,
                     'w185'
                   )
                 : '',
-            })) ?? [],
-        },
+              alt: cast.name,
+            },
+          })) ?? [],
       }))
     );
   }

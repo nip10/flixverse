@@ -73,41 +73,7 @@
 
     <section>
       <h2 class="text-3xl">Cast</h2>
-      <ng-container *ngIf="tvshowCredits$ | async as media">
-        <p *ngIf="media.isLoading">Loading...</p>
-        <p *ngIf="media.isError">Error...</p>
-        <ng-container *ngIf="media.isSuccess && media.data as sliderMedia">
-          <swiper-container
-            space-between="10"
-            slides-per-view="auto"
-            lazy-preload-prev-next="true"
-            slides-per-group="3"
-            navigation="true"
-            keyboard="true"
-          >
-            <swiper-slide
-              *ngFor="let item of sliderMedia.cast"
-              lazy="true"
-              class="w-[185px]"
-            >
-              <a [routerLink]="['person', item.id]" class="flex flex-col gap-2">
-                <img
-                  class="rounded-lg"
-                  loading="lazy"
-                  [src]="item.profile_path"
-                  [alt]="item.name"
-                />
-                <div>
-                  <h2 class="text-xl tracking-wide">
-                    {{ item.name }}
-                  </h2>
-                  <h3 class="text-slate-500">{{ item.character }}</h3>
-                </div>
-              </a>
-            </swiper-slide>
-          </swiper-container>
-        </ng-container>
-      </ng-container>
+      <app-cast-slider [castState$]="tvshowCredits$" />
     </section>
 
     <section>

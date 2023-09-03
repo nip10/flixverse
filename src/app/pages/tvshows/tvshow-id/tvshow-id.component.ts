@@ -5,6 +5,7 @@ import { type Observable, map, switchMap } from 'rxjs';
 import { Clapperboard, LucideAngularModule, Star } from 'lucide-angular';
 import type { QueryObserverResult } from '@tanstack/query-core';
 import { DialogModule } from 'primeng/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TmdbService } from '../../../shared/services/tmdb.service';
 import type {
   GetTvShowCreditsResponse,
@@ -18,7 +19,7 @@ import {
   type MediaState,
 } from '../../../components/media-slider/media-slider.component';
 import { HlmButtonDirective } from '../../../components/button/hlm-button.directive';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CastSliderComponent, type CastState } from '../../../components/cast-slider/cast-slider.component';
 
 export interface TvshowIdData {
   name: string;
@@ -43,7 +44,9 @@ export interface TvshowState {
 }
 
 export interface TvshowCreditsData {
-  cast: (Pick<TvShowCast, 'id' | 'name' | 'profile_path'> & { character: string })[];
+  cast: (Pick<TvShowCast, 'id' | 'name' | 'profile_path'> & {
+    character: string;
+  })[];
 }
 
 export interface TvshowCreditsState {
@@ -74,6 +77,7 @@ export interface TvshowVideosState {
     MediaSliderComponent,
     HlmButtonDirective,
     DialogModule,
+    CastSliderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './tvshow-id.component.html',
@@ -145,25 +149,26 @@ export class TvshowIdComponent {
 
   private transformTvshowCredits(
     source$: Observable<QueryObserverResult<GetTvShowCreditsResponse, unknown>>
-  ): Observable<TvshowCreditsState> {
+  ): Observable<CastState> {
     return source$.pipe(
       map((response) => ({
         ...response,
-        data: {
-          cast:
-            response.data?.cast.map((cast) => ({
-              id: cast.id,
-              name: cast.name,
-              character: cast.roles[0].character,
-              profile_path: cast.profile_path
+        data:
+          response.data?.cast.map((cast) => ({
+            id: cast.id,
+            name: cast.name,
+            character: cast.roles[0].character,
+            image: {
+              url: cast.profile_path
                 ? this.tmdbService.createImageUrl(
                     'profile_sizes',
                     cast.profile_path,
                     'w185'
                   )
                 : '',
-            })) ?? [],
-        },
+              alt: cast.name,
+            },
+          })) ?? [],
       }))
     );
   }

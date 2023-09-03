@@ -8,22 +8,20 @@ import {
 import { CommonModule } from '@angular/common';
 import type { Observable } from 'rxjs';
 import { register } from 'swiper/element/bundle';
-import { LucideAngularModule, Star } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
 register();
 
-export interface MediaState {
+export interface CastState {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
-  data?: MediaSliderData[];
+  data?: CastSliderData[];
 }
 
-export interface MediaSliderData {
+export interface CastSliderData {
   id: number;
-  mediaType: 'movies' | 'tvshows';
   name: string;
-  rating: number;
+  character: string;
   image: {
     url: string;
     alt: string;
@@ -31,14 +29,13 @@ export interface MediaSliderData {
 }
 
 @Component({
-  selector: 'app-media-slider',
+  selector: 'app-cast-slider',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [CommonModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  templateUrl: './media-slider.component.html',
+  templateUrl: './cast-slider.component.html',
 })
-export class MediaSliderComponent {
+export class CastSliderComponent {
   @ViewChild('swiper') swiper: ElementRef | undefined;
-  @Input() mediaState$: Observable<MediaState> | undefined;
-  starIcon = Star;
+  @Input() castState$: Observable<CastState> | undefined;
 }
