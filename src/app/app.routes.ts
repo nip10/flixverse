@@ -1,31 +1,37 @@
 import { Route } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { MoviesComponent } from './pages/movies/movies.component';
-import { MovieIdComponent } from './pages/movies/movie-id/movie-id.component';
-import { TvshowsComponent } from './pages/tvshows/tvshows.component';
-import { TvshowIdComponent } from './pages/tvshows/tvshow-id/tvshow-id.component';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    component: HomeComponent,
+    loadComponent: () =>
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'movies',
-    component: MoviesComponent,
+    loadComponent: () =>
+      import('./pages/movies/movies.component').then((m) => m.MoviesComponent),
     pathMatch: 'full',
   },
   {
     path: 'movies/:movieId',
-    component: MovieIdComponent,
+    loadComponent: () =>
+      import('./pages/movies/movie-id/movie-id.component').then(
+        (m) => m.MovieIdComponent
+      ),
   },
   {
     path: 'tvshows',
-    component: TvshowsComponent,
+    loadComponent: () =>
+      import('./pages/tvshows/tvshows.component').then(
+        (m) => m.TvshowsComponent
+      ),
     pathMatch: 'full',
   },
   {
     path: 'tvshows/:tvshowId',
-    component: TvshowIdComponent,
+    loadComponent: () =>
+      import('./pages/tvshows/tvshow-id/tvshow-id.component').then(
+        (m) => m.TvshowIdComponent
+      ),
   },
 ];
